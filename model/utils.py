@@ -29,21 +29,9 @@ def clc_cindex(label,predict,censor):
 def ROC(label,predict):
     fpr, tpr, threshold = roc_curve(label, predict)
     sp=1-fpr
-#     np.savetxt('/media/user/Disk 02/wangzhiqin/TensorMulti/result/roc/sp.txt',sp,fmt='%.4f')
-#     np.savetxt('/media/user/Disk 02/wangzhiqin/TensorMulti/result/roc/fpr.txt',fpr,fmt='%.4f')
-#     np.savetxt('/media/user/Disk 02/wangzhiqin/TensorMulti/result/roc/tpr.txt',tpr,fmt='%.4f')
-#     np.savetxt('/media/user/Disk 02/wangzhiqin/TensorMulti/result/roc/threshold.txt',threshold,fmt='%.4f')
+
     AUC = auc(fpr, tpr)
-    
-#     plt.figure()
-#     plt.plot(fpr, tpr, color="red", label='ROC curve(auc = %0.2f)' % AUC)
-#     plt.xlim([0.0, 1.0])
-#     plt.ylim([0.0, 1.0])
-#     plt.xlabel("FPR")
-#     plt.ylabel("TPR")
-#     plt.title('TCGA-BRC-ROC')
-#     plt.legend(loc='lower right')
-#     plt.savefig("/media/user/Disk 02/wangzhiqin/TensorMulti/result/roc/roc.png")
+
    
     return AUC
 
