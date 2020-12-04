@@ -10,10 +10,10 @@ git clone https://github.com/isfj/GPDBN.git
 cd GPDBN
 ```
 ## Running Experiments
-Our proposed GPDBN framework is in the ` ` directorty.
+Our proposed GPDBN framework is in the `GPDBN/model/inter_intra.py ` directorty.
 
 ## Dataset
-The model is evaluated on 
+Breast cancer patient samples adopted in this study include matched digital whole-slide images and gene expression profiles, which are acquired from The Cancer Genome Atlas (TCGA) data portal 
 
 ## Contact
 Please feel free to contact us if you need any help: ustc023w@mail.ustc.edu.cn
