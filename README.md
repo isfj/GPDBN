@@ -6,16 +6,16 @@ It uses Keras library with the Tensorflow backend, and does not work on the Thea
 
 ## Installation
 '''
-git clone 
+git clone https://github.com/isfj/GPDBN.git
 cd GPDBN
 '''
 ## Running Experiments
 Our proposed GPDBN framework is in the '' directorty.
 
-# Dataset
+## Dataset
 The model is evaluated on 
 
 All rights reserved
 
-# Contact
+## Contact
 Please feel free to contact us if you need any help: ustc023w@mail.ustc.edu.cn
