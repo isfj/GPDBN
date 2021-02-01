@@ -35,7 +35,7 @@ def load_patho():
 		data_patho.append(table.row_values(i))
 	return data_patho
 
-def GPDFN():
+def GPDBN():
     # **********
     #our proposed GPDBN framework
     # *********
