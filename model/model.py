@@ -162,7 +162,7 @@ def Intra_BFEM_G(): ##Intra_BFEM_P
 
 def Inter_BFEM():
     # ********
-    # patho+gene+模态间交互
+    # patho+gene+inter-modality relations
     # *********
     input_gene = Input(shape = (32, ), name = 'gene_input')
     input_patho = Input(shape = (32, ), name = 'patho_input')
