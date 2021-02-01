@@ -2,7 +2,7 @@
 
 This is an implementation of GPDBN in Python 2.7.12 under Linux with CPU Intel Xeon 4110 @ 2.10GHz, GPU NVIDIA GeForce RTX 2080 Ti, and 192GB of RAM. It needs Keras libraries to be installed.
 
-It uses Keras library with the Tensorflow backend, and does not work on the Theano backend. Because the loss function of the network is written with Tensorflow.
+It uses Keras library with the Tensorflow backend, and does not work on the Theano backend, as the loss function of the network is written with Tensorflow.
 
 ## Installation
 ```
