@@ -70,9 +70,9 @@ def GPDBN():
        
     x = Dense(500, activation='relu',name = 'FC_1')(inter_intra)  
       
-    x = Dropout(0.1)(x)
+    x = Dropout(0.3)(x)
     x = Dense(256, activation='relu', name = 'FC_5')(x)
-    x = Dropout(0.1)(x)    
+    x = Dropout(0.3)(x)    
     x = Dense(128 , activation='relu', name = 'FC_3')(x)
     x = Dropout(0.1)(x)    
     x = Dense(32, activation='relu', name = 'FC_4')(x)
@@ -111,21 +111,86 @@ def get_cv_data():
     np.save('/media/user/Disk 02/wangzhiqin/TensorMulti/data/cv_data/train_index.npy', train_index)
     np.save('/media/user/Disk 02/wangzhiqin/TensorMulti/data/cv_data/test_index.npy', test_index)
         
-def concat_model():
+def Baseline_GP():
     inputs = Input(shape = (64,),name='input')
     x = Dense(500, activation='relu')(inputs)
     x = Dropout(0.3)(x) 
     x = Dense(256, activation='relu',kernel_regularizer=regularizers.l2(0.00001))(x)
     x = Dropout(0.3)(x)    
     x = Dense(128, activation='relu',kernel_regularizer=regularizers.l2(0.00001))(x)
-    x = Dropout(0.3)(x)    
+    x = Dropout(0.1)(x)    
     x = Dense(32, activation='relu')(x)
+    x = Dropout(0.1)(x) 
     
-    score = Dense(2, activation='softmax',name='output')(x)
-    outputs = Concatenate(axis=1)([score,inputs])
+    outputs = Dense(2, activation='softmax',name='output')(x)
     model = Model(inputs=inputs, outputs=outputs)
     return model
 
+def Baseline_G():  ##Baseline_P
+    inputs = Input (shape = (32, ), name = 'input')
+    x = Dense(500, activation='relu')(inputs)
+    x = Dropout(0.3)(x) 
+    x = Dense(256, activation='relu',kernel_regularizer=regularizers.l2(0.00001))(x)
+    x = Dropout(0.3)(x)    
+    x = Dense(128, activation='relu',kernel_regularizer=regularizers.l2(0.00001))(x)
+    x = Dropout(0.1)(x)    
+    x = Dense(32, activation='relu')(x)
+    x = Dropout(0.1)(x) 
+    outputs = Dense(2, activation='softmax',name='output')(x)
+    model = Model(inputs=inputs, outputs=outputs)
+    return model
+
+def Intra_BFEM_G(): ##Intra_BFEM_P
+    input_gene = Input (shape = (32, ), name = 'gene_input')	
+    gene = Reshape((1,32))(input_gene)
+    gene_gene = merge([gene, gene], mode = 'dot', dot_axes = 1, name = 'gene_gene')
+    intra = Flatten()(gene_gene)
+    intra = Dense(20, activation='relu')(intra)
+    gene_intra = merge([input_gene, intra], mode = 'concat', dot_axes=1, name='gene_intra')
+   
+    x = Dense(500, activation='relu')(gene_intra)
+    x = Dropout(0.3)(x) 
+    x = Dense(256, activation='relu',kernel_regularizer=regularizers.l2(0.00001))(x)
+    x = Dropout(0.3)(x)    
+    x = Dense(128, activation='relu',kernel_regularizer=regularizers.l2(0.00001))(x)
+    x = Dropout(0.1)(x)    
+    x = Dense(32, activation='relu')(x)
+    x = Dropout(0.1)(x) 
+    outputs = Dense(2, activation='softmax',name='output')(x)
+    model = Model(inputs=inputs, outputs=outputs)
+    return model	
+
+def Inter_BFEM():
+    # ********
+    # patho+gene+模态间交互
+    # *********
+    input_gene = Input(shape = (32, ), name = 'gene_input')
+    input_patho = Input(shape = (32, ), name = 'patho_input')
+    
+    biased_gene = Reshape((1, 32))(input_gene)
+    biased_patho = Reshape((1, 32 ))(input_patho)
+    dot_layer = merge([biased_gene, biased_patho], mode='dot', dot_axes=1, name='dot_layer')
+    
+    x = Flatten()(dot_layer) 
+    
+    x = Dense(20, activation='relu', name = 'FC_1')(x)
+    inter_intra = merge([x, input_patho,input_gene], mode='concat', dot_axes=1, name='inter-patho')
+    
+    
+    inter_intra = Dense(500, activation='relu', name = 'FC_2')(inter_intra)
+    x = Dropout(0.3)(x)   
+    inter_intra = Dense(256, activation='relu', name = 'FC_6')(inter_intra)
+    x = Dropout(0.3)(x) 
+    inter_intra = Dense(128, activation='relu', name = 'FC_4')(inter_intra)
+    x = Dropout(0.1)(x) 
+    inter_intra = Dense(32, activation='relu', name = 'FC_5')(inter_intra)
+    x = Dropout(0.1)(x) 
+    outputs = Dense(2, activation='softmax',name='output')(inter_intra)
+    
+    model = Model(inputs=[input_gene, input_patho], outputs=outputs)
+  
+    return model	
+	
 
 def corr_loss(y_true, cca_input):
     x = cca_input
