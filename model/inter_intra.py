@@ -23,21 +23,24 @@ from model import load_data,get_cv_data,load_gege, load_patho
 from sklearn.metrics import precision_score, recall_score, f1_score, roc_curve
 from sklearn.metrics import roc_auc_score
 import xlrd
-
+import random
 
 os.system('nvidia-smi -q -d Memory |grep -A4 GPU|grep Free >tmp')
 memory_gpu = [int(x.split()[2]) for x in open('tmp', 'r').readlines()]
 os.environ['CUDA_VISIBLE_DEVICES'] = str(np.argmax(memory_gpu))
 os.system('rm tmp')
 
+random.seed(1015)  
+np.random.seed(1015)
+tf.set_random_seed(1015)
 
 
 def fusion_test():
     
     # Unpacking the data
     path = '/media/user/Disk 02/wangzhiqin/TensorMulti/data/cv_data/2020_6_23/'
-    train_index = np.load(path + 'train_index.npy')
-    test_index = np.load(path + 'test_index.npy')
+    train_index = np.load(path + 'train_index.npy', allow_pickle=True)
+    test_index = np.load(path + 'test_index.npy', allow_pickle=True)
 
     label = get_label()
     os_time = get_os_time()
@@ -116,32 +119,29 @@ def fusion_test():
         predict_score.extend(y_pred[:,1].tolist())
     
     # save label
-#     label_path = '/media/user/Disk 02/wangzhiqin/TensorMulti/result/inter_intra/roc/2020_11_13/'
-#     np.save(label_path+'inter_intra_ori_label.npy',ori_label)
-#     np.save(label_path+'inter_intra_predict_score.npy', predict_score)
-#     np.save(label_path+'inter_intra_predict_label.npy',predict)
+    label_path = '/media/user/Disk 02/wangzhiqin/TensorMulti/result/inter_intra/roc/2020_11_13/'
+    np.save(label_path+'inter_intra_ori_label.npy',ori_label)
+    np.save(label_path+'inter_intra_predict_score.npy', predict_score)
+    np.save(label_path+'inter_intra_predict_label.npy',predict)
 
     # save for KM
-#     km_path = '/media/user/Disk 02/wangzhiqin/TensorMulti/result/inter_intra/km/2020_11_13/'
-#     np.save(km_path+'inter_intra_predict_label.npy',predict)
-#     np.save(km_path+'inter_intra_os_time.npy', ori_os_time)  
-#     np.save(km_path+'inter_intra_state.npy', ori_os_state)
+    km_path = '/media/user/Disk 02/wangzhiqin/TensorMulti/result/inter_intra/km/2020_11_13/'
+    np.save(km_path+'inter_intra_predict_label.npy',predict)
+    np.save(km_path+'inter_intra_os_time.npy', ori_os_time)  
+    np.save(km_path+'inter_intra_state.npy', ori_os_state)
 
-    print('\n')
-  
-    precision,recall,f1,acc=get_precision_recall_f1_acc(ori_label,predict)
-    print('precision,recall,f1,acc= %f%f%f%f',precision,recall,f1,acc)
+    print('\n')  
     cindex = clc_cindex(np.array(ori_os_time), -np.array(predict_score),np.array(ori_os_state))
     print('\n')
     print('cindex=',cindex)
     auc = ROC(ori_label, predict_score)
     print('\n')
     print('auc=',auc)  
-    return precision,recall,f1,acc,auc,cindex
+    return auc,cindex
     
     
 if __name__ == '__main__':
-    precision,recall,f1,acc,auc,cindex = fusion_test()
+    auc,cindex = fusion_test()
 
     
 
