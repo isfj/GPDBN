@@ -18,7 +18,9 @@ python inter_intra.py
 ```
 
 ## Dataset
-Breast cancer patient samples adopted in this study include matched digital whole-slide images and gene expression profiles, which are acquired from The Cancer Genome Atlas (TCGA) data portal 
+Breast cancer patient samples adopted in this study include matched digital whole-slide images and gene expression profiles, which are acquired from The Cancer Genome Atlas (TCGA) data portal
+
+each line of pre-processed mRNA and pathological image features is the features of one sample,and there are 345 patients totally.
 
 ## Contact
 Please feel free to contact us if you need any help: ustc023w@mail.ustc.edu.cn
