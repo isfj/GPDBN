@@ -20,7 +20,7 @@ python inter_intra.py
 ## Dataset
 Breast cancer patient samples adopted in this study include matched digital whole-slide images and gene expression profiles, which are acquired from The Cancer Genome Atlas (TCGA) data portal.
 
-each row of pre-processed mRNA and pathological image data represents the feature vector of one patient,and there are totally 345 patients.
+Each row of 'mRNA_data_slct32.xlsx' and 'patho_data_slct32.xlsx' represents the feature vector of one patient,and there are totally 345 patients.
 
 ## Contact
 Please feel free to contact us if you need any help: ustc023w@mail.ustc.edu.cn
