@@ -16,7 +16,7 @@ python train_cv.py
 ```
 
 ## Dataset
-Breast cancer patient samples adopted in this study include matched digital whole-slide images and gene expression profiles, which are acquired from The Cancer Genome Atlas (TCGA) data portal.
+1015 breast cancer patient samples adopted in this study include matched digital whole-slide images and gene expression profiles, which are acquired from The Cancer Genome Atlas (TCGA) data portal.
 
 
 ## Contact
