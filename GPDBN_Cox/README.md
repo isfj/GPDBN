@@ -18,6 +18,8 @@ python train_cv.py
 ## Dataset
 1015 breast cancer patient samples adopted in this study include matched digital whole-slide images and gene expression profiles, which are acquired from The Cancer Genome Atlas (TCGA) data portal.
 
+## Acknowledgments
+This code is inspired by Pathomic Fusion.
 
 ## Contact
 Please feel free to contact us if you need any help: ustc023w@mail.ustc.edu.cn
